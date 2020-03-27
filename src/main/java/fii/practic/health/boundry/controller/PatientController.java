@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/patients")
@@ -43,15 +43,15 @@ public class PatientController {
         return patientService.save(modelMapper.map(patientDTO, Patient.class));
     }
 
-
     @PutMapping
-    @RequestMapping(value = "/{id}")
-    public Optional<Patient> update(@RequestBody PatientDTO patientDTO){
-        return patientService.update(modelMapper.map(patientDTO, Patient.class));
+    @RequestMapping(value = "/edit", method={RequestMethod.PUT})
+    public Patient update(@RequestBody Patient patient){
+        Patient updatePatient = patientService.update(modelMapper.map(patient, Patient.class));
+        return updatePatient;
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@RequestBody Long id) {
+    public void delete(@PathVariable Long id) {
         patientService.deletePatient(id);
     }
 

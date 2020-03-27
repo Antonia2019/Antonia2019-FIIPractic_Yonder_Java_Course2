@@ -1,5 +1,6 @@
 package fii.practic.health.boundry.controller;
 
+import javax.validation.constraints.NotNull;
 import fii.practic.health.boundry.dto.DoctorDTO;
 import fii.practic.health.control.service.PatientService;
 import fii.practic.health.entity.model.Doctor;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/doctors")
@@ -43,19 +43,28 @@ public class DoctorController {
         return doctorService.findDoctorsByPatientsFirstName(firstName);
     }
 
+    // Nu functioneaza
     @PostMapping
-    public Doctor save(@RequestBody DoctorDTO doctorDTO){
-        return doctorService.save(modelMapper.map(doctorDTO, Doctor.class));
+    public Doctor save(@RequestBody Doctor doctor){
+        Doctor saveDoctor = doctorService.save(doctor);
+        return saveDoctor;
     }
+
+    //  Nu functioneaza -- (Metoda la fel ca la PatientController)
+//    @PostMapping
+//    public Doctor save(@RequestBody DoctorDTO doctorDTO){
+//        return doctorService.save(modelMapper.map(doctorDTO, Doctor.class));
+//    }
 
     @PutMapping
     @RequestMapping(value = "/{id}")
-    public Optional<Doctor> update(@RequestBody DoctorDTO doctorDTO){
-        return doctorService.update(modelMapper.map(doctorDTO, Doctor.class));
+    public Doctor update(@RequestBody Doctor doctor){
+        Doctor updateDoctor = doctorService.update(modelMapper.map(doctor, Doctor.class));
+        return updateDoctor;
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@RequestBody Long id) {
+    public void delete(@PathVariable @NotNull Long id) {
         doctorService.deleteDoctor(id);
     }
 

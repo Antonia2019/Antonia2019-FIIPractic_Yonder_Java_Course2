@@ -4,7 +4,6 @@ import fii.practic.health.entity.model.Doctor;
 import fii.practic.health.entity.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,14 +38,15 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorRepository.findDoctorsByPatientsFirstName(firstName);
     }
 
-
     @Override
-    public Optional<Doctor> update(Doctor doctor) {
-        return doctorRepository.findById(doctor);
+    public Doctor update(Doctor doctor) {
+        Optional<Doctor> doctorUpdate = doctorRepository.findById(doctor.getId());
+        return doctorRepository.save(doctorUpdate.get());
     }
 
     @Override
     public void deleteDoctor(Long id) {
-        doctorRepository.deleteById(id);
+        Optional<Doctor> doctorDB = doctorRepository.findById(id);
+        doctorRepository.delete(doctorDB.get());
     }
 }

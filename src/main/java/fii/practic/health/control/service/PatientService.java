@@ -1,9 +1,9 @@
 package fii.practic.health.control.service;
 
+import fii.practic.health.boundry.dto.PatientDTO;
 import fii.practic.health.entity.model.Patient;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PatientService {
 
@@ -13,8 +13,8 @@ public interface PatientService {
 
     Patient save(Patient patient);
 
-    Optional<Patient> update(Patient patient);
+    Patient update(Patient toUpdatePatient);
 
-    Optional<Patient> deletePatient(Long id);
+    void deletePatient(Long id);
 
 }
